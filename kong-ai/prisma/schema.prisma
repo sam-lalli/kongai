@@ -1,0 +1,21 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Assistant {
+  id      String  @id @default(uuid())
+  userId  String  @unique
+}
+
+model UserThread {
+  id        String    @id @default(uuid())
+  userId    String    @unique
+  threadId  String
+  createdAt DateTime  @default(now())
+}
