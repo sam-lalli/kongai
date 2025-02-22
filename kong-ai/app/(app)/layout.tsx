@@ -2,12 +2,12 @@
 
 import Navbar from "@/components/Navbar";
 import axios from 'axios'
-import { User } from "@prisma/client";
+import { UserThread } from "@prisma/client";
 import { useEffect, useState } from "react";
 
 export default function AppLayout({ children }: Readonly<{children: React.ReactNode; }>) {
 
-    const [userThread, setUserThread] = useState<User | null>(null);
+    const [userThread, setUserThread] = useState<UserThread | null>(null);
 
     useEffect(() => {
         async function getUserThread() {
@@ -15,7 +15,7 @@ export default function AppLayout({ children }: Readonly<{children: React.ReactN
             const response = await axios.get<{
               success: boolean;
               message?: string;
-              userThread: User;
+              userThread: UserThread;
             }>("/api/user-thread");
     
             if (!response.data.success || !response.data.userThread) {
@@ -33,6 +33,8 @@ export default function AppLayout({ children }: Readonly<{children: React.ReactN
     
         getUserThread();
       }, [setUserThread]);
+
+      console.log("userThread", userThread)
 
     return (
         <div className="flex flex-col w-full h-full">

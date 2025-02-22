@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react'
-import { ThreadMessage } from "openai/resources/beta/threads/index.mjs";
+import ThreadMessage from 'openai';
 
 
 function ChatPage() {
@@ -11,7 +11,7 @@ function ChatPage() {
   const [messages, setMessages] = useState<ThreadMessage[]>([]);
 
   const fetchMessages = async () => {
-    
+
   }
 
 
