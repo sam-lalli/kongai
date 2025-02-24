@@ -12,12 +12,12 @@ export async function POST(req: Request) {
         const openai = new OpenAI();
     
         try {
-            const messages = await openai.beta.threads.messages.list(threadId);
+            const response = await openai.beta.threads.messages.list(threadId);
             
-            console.log("Returned from openai", messages)
+            console.log("Returned from openai", response.data)
 
     
-            return NextResponse.json({ messages, success: true }, {status: 200});
+            return NextResponse.json({ messages: response.data, success: true }, {status: 200});
         } catch (error) {
             console.log(error)
             return NextResponse.json({ error : "something went wrong", success: false}, {status: 500}); 
