@@ -3,7 +3,7 @@ import OpenAI from "openai";
 
 
 export async function POST(req: Request) {
-    const {message, threadId} = await req.json();
+    const {message, threadId, fromUser = false} = await req.json();
 
     console.log(message, threadId);
 
@@ -14,10 +14,13 @@ export async function POST(req: Request) {
     const openai = new OpenAI();
 
     try {
-        const threadMessage = await openai.beta.threads.messages.create(
-            threadId,
-            { role: "user", content: message }
-        );
+        const threadMessage = await openai.beta.threads.messages.create( threadId, { 
+            role: "user", 
+            content: message,
+            metadata: {
+                fromUser,
+            }
+        });
 
         console.log("Returned from openai", threadMessage)
 
