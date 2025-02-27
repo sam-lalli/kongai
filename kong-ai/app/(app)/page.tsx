@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useCallback, useEffect, useState } from 'react'
-import ThreadMessage from 'openai';
+import { Message as ThreadMessage } from "openai/resources/beta/threads/messages.mjs"; 
 import axios from 'axios';
 import { useAtom } from 'jotai';
 import { assistantAtom, userThreadAtom } from '@/atoms';
