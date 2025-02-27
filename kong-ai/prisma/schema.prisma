@@ -10,7 +10,7 @@ datasource db {
 
 model Assistant {
   id      String  @id @default(uuid())
-  userId  String  @unique
+  assistantId  String  @unique
 }
 
 model UserThread {
