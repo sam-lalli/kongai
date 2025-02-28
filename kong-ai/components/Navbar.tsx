@@ -10,7 +10,7 @@ import kongAI from "../public/KongAI.webp"
 const routes = [
   {
     name: "Chat",
-    path: "/",
+    path: "/chat",
   },
   {
     name: "Profile",
