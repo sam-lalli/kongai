@@ -32,7 +32,7 @@ export default function HeroSection() {
     <section className="relative min-h-screen flex items-center overflow-hidden">
       {/* Hero Background Image */}
       <div className="absolute inset-0 z-0">
-        <Image src="/HeroImage1.jpg" alt="King Kong in jungle" fill priority className="object-cover brightness-50" />
+        <Image src="/HeroImage.jpg" alt="King Kong in jungle" fill priority className="object-cover brightness-50" />
       </div>
 
       {/* Overlay gradient */}
