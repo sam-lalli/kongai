@@ -1,3 +1,4 @@
+import FeatureSection from '@/components/FeatureSection'
 import HeroSection from '@/components/HeroSection'
 import TextPreview from '@/components/TextPreview'
 import WhyUs from '@/components/WhyUs'
@@ -9,6 +10,7 @@ function HomePage() {
       <HeroSection />
       <WhyUs />
       <TextPreview />
+      <FeatureSection />
 
     </main>
   )
