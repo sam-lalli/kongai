@@ -96,11 +96,6 @@ export default function HeroSection() {
                   </div>
                 </div>
               </div>
-
-              {/* <div className="flex items-center bg-zinc-800/60 backdrop-blur-sm px-4 py-2 rounded-lg border border-zinc-700">
-                <MessageSquare className="h-5 w-5 text-green-500 mr-2" />
-                <span className="text-sm">Daily workout texts keep you on track</span>
-              </div> */}
             </div>
           </div>
         </div>

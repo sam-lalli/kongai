@@ -243,8 +243,8 @@ function ChatPage() {
         ))}
       </div>
       {/* INPUT */}
-      <div className='mt-auto p-4 bg-gray-800'>
-        <div className='flex items-center bg-white p-2'>
+      <div className='mt-auto p-4 rounded-lg'>
+        <div className='flex items-center bg-white p-2 rounded-lg'>
           <input
           type='text'
           className='flex-grow bg-transparent focus:outline-none text-black'

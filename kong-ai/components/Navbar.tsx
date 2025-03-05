@@ -28,7 +28,7 @@ function Navbar() {
           <Image height="30" src={kongAI} alt="kongAI image"/>
           <h1 className="text-2xl font-bold font-mono">KongAI</h1>
         </Link>
-        <div className="flex gap-x-6 text-lg items-center">
+        <div className="flex gap-x-6 text-lg items-center font-bold">
           {routes.map((route, idx) => (
             <Link
               key={idx}
