@@ -22,27 +22,30 @@ function Navbar() {
   const pathname = usePathname();
 
   return (
-    <div className="p-4 flex flex-row justify-between items-center bg-black text-white ">
-      <Link href="/" className=" flex flex-rowitems-center gap-x-2">
-        <Image height="30" src={kongAI} alt="kongAI image"/>
-        <h1 className="text-2xl font-bold font-mono">KongAI</h1>
-      </Link>
-      <div className="flex gap-x-6 text-lg items-center">
-        {routes.map((route, idx) => (
-          <Link
-            key={idx}
-            href={route.path}
-            className={
-              pathname === route.path ? "border-b-2 border-green-700" : ""
-            }
-          >
-            {route.name}
-          </Link>
-        ))}
+    <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="p-4 flex flex-row justify-between items-center bg-black text-white ">
+        <Link href="/" className=" flex flex-rowitems-center gap-x-2">
+          <Image height="30" src={kongAI} alt="kongAI image"/>
+          <h1 className="text-2xl font-bold font-mono">KongAI</h1>
+        </Link>
+        <div className="flex gap-x-6 text-lg items-center">
+          {routes.map((route, idx) => (
+            <Link
+              key={idx}
+              href={route.path}
+              className={
+                pathname === route.path ? "border-b-2 border-green-700" : ""
+              }
+            >
+              {route.name}
+            </Link>
+          ))}
 
-        <UserButton />
+          <UserButton />
+        </div>
       </div>
-    </div>
+    </header>
+
   );
 }
 
