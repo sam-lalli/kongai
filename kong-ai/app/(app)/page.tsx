@@ -1,4 +1,5 @@
 import FeatureSection from '@/components/FeatureSection'
+import JoinNow from '@/components/JoinNow'
 import HeroSection from '@/components/HeroSection'
 import TextPreview from '@/components/TextPreview'
 import WhyUs from '@/components/WhyUs'
@@ -11,7 +12,7 @@ function HomePage() {
       <WhyUs />
       <TextPreview />
       <FeatureSection />
-
+      <JoinNow />
     </main>
   )
 }
