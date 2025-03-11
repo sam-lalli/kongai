@@ -26,7 +26,7 @@ export default async function ProfilePage() {
   }
 
   return (
-    <div className="max-w-screen-lg m-10">
+    <div className="max-w-screen-xxl m-12">
       <ProfileContainer challengePreferences={challengePreferences} />
     </div>
   );
