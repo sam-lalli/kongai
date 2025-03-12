@@ -50,7 +50,7 @@ export default function HeroSection() {
             }`}
           >
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6 text-white leading-tight">
-              Become the <span className="text-green-500">King</span> of Your Fitness Jungle
+              Become the <span className="text-green-500">King</span> of Your Fitness Journey
             </h1>
             <p className="text-xl md:text-2xl mb-8 text-zinc-300 max-w-2xl">
               Dominate your fitness goals with Kong AI, the world&apos;s most powerful AI fitness coach that texts you

@@ -6,7 +6,7 @@ import { Assistant, UserThread } from "@prisma/client";
 import { useEffect } from "react";
 import { useAtom } from "jotai";
 import { assistantAtom, userThreadAtom } from "@/atoms";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function AppLayout({ children }: Readonly<{children: React.ReactNode; }>) {
 
@@ -71,6 +71,7 @@ export default function AppLayout({ children }: Readonly<{children: React.ReactN
         <div className="flex flex-col w-full h-full">
             <Navbar/>
             {children}
+            <Toaster />
         </div>
 
     );

@@ -5,6 +5,8 @@ import React, { useState } from 'react'
 import { Button } from './ui/button'
 import { Switch } from './ui/switch'
 import DifficultyCard from './DifficultyCard';
+import axios from 'axios';
+import toast from 'react-hot-toast';
 
 const difficulties = [
     {
@@ -35,22 +37,51 @@ interface ProfileContainerProps {
 
 function ProfileContainer({ challengePreferences }: ProfileContainerProps) {
 
-    const [sendNotiications, setSendNotifications] = useState(challengePreferences.sendNotifications)
+    const [sendNotifications, setSendNotifications] = useState(challengePreferences.sendNotifications)
     const [selectedDifficulty, setSelectedDifficulty] = useState(challengePreferences.challengeId)
+    const [saving, setSaving] = useState(false)
 
     const handleToggleNotifications = () => {
-
-    }
+        setSendNotifications((prev) => !prev);
+      };
 
     const handleSelectDifficulty = (difficultyId: Difficulties) => {
-
+        setSelectedDifficulty(difficultyId);
     }
+
+    const handleSave = async () => {
+        setSaving(true);
+        try {
+          const response = await axios.post<{
+            success: boolean;
+            data?: ChallengePreferences;
+            message?: string;
+          }>("/api/challenge-preferences", {
+            id: challengePreferences.id,
+            challengeId: selectedDifficulty,
+            sendNotifications,
+          });
+    
+          if (!response.data.success || !response.data.data) {
+            console.error(response.data.message ?? "Something went wrong");
+            toast.error(response.data.message ?? "Something went wrong");
+            return;
+          }
+    
+          toast.success("Preferences saved!");
+        } catch (error) {
+          console.error(error);
+          toast.error("Something went wrong. Please try again.");
+        } finally {
+          setSaving(false);
+        }
+      };
 
   return (
     <div className='flex flex-col'>
         <div className="flex flex row justify-between items-center mb-4">
         <h1 className="font-bold text-2xl">Challenge Level</h1>
-            <Button>Save</Button>
+            <Button onClick={handleSave}>{saving ? "Saving..." : "Save"}</Button>
         </div>
         <div className="flex flex-row items-center justify-between mb-4 p-4 shadow rounded-lg">
             <div>
@@ -59,7 +90,7 @@ function ProfileContainer({ challengePreferences }: ProfileContainerProps) {
                 </h3>
                 <p>Receive push notifications when new challenges are available.</p>
             </div>
-            <Switch checked={sendNotiications}  onCheckedChange={handleToggleNotifications} />
+            <Switch checked={sendNotifications}  onCheckedChange={handleToggleNotifications} />
         </div>
         <div className="grid grid-col-1 md:grid-cols-3 gap-4">
         {difficulties.map((difficulty) => (
