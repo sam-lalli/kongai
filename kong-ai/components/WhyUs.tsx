@@ -14,7 +14,7 @@ export default function WhyUs() {
                     <Badge variant="outline" className="mb-4 border-green-500 text-green-500">
                     WHY CHOOSE KONG AI
                     </Badge>
-                    <h2 className="text-4xl md:text-5xl font-bold mb-6">Become the King of Your Fitness Journey</h2>
+                    <h2 className="text-4xl md:text-5xl font-bold mb-6">King of the Jungle</h2>
                     <p className="text-lg text-zinc-400 max-w-3xl mx-auto">
                     Our AI-powered fitness coach texts you personalized workouts, adapting to your unique needs and helping
                     you dominate your fitness goals like King Kong dominates the jungle.
