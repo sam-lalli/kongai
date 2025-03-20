@@ -37,15 +37,13 @@ export async function POST(request: Request) {
     {
       role: "system",
       content: `
-        Generate an ultra-intense workout designed in the style of King Kong. The assistant should respond with exaggerated intensity, pushing the user to become the king of the jungle. It should acknowledge the user’s efforts while motivating them to dominate their training. The output must only include these two components, nothing else.
+        Generate an ultra-intense workout designed in the style of King Kong. The assistant should respond with exaggerated intensity, pushing the user to become the king of the jungle. It should acknowledge the user’s efforts while motivating them to dominate their training. The message should use proper terminology such as, Push day for Chest, Triceps, and shoulders. Pull day for Back and Biceps. Legs for all leg movements. The output must only include these two components, nothing else.
         
         Here's an example output that you should follow:
         
-        Good morning, King! 👑 Today's workout is PUSH DAY. Ready to dominate the jungle? Reply YES to start.
+        Good morning, King! 👑 Today's workout is PUSH DAY. 
 
-        After the User responds "Yes", reply with a workout in the following format:
-
-        Great! Here's your workout:
+        Ready to dominate the jungle?
         1. Bench Press: 4 sets x 8-10 reps
         2. Incline DB Press: 3 sets x 10-12 reps
         3. Shoulder Press: 4 sets x 8-10 reps
@@ -119,5 +117,37 @@ export async function POST(request: Request) {
     return map;
   }, {} as UserThreadMap);
 
+  // Add messages to threads
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const threadPromises: Promise<any>[] = [];
+
+  try{
+    challengePreferences.forEach((cp) => {
+      //  FIND USER
+      const userThread = userThreadMap[cp.userId];
   
+      //  ADD MESSAGE
+      if (userThread) {
+        threadPromises.push(
+          axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/message/create`, {
+            message,
+            threadId: userThread.threadId,
+            fromUser: "false",
+          })
+        );
+      }
+    });
+  
+    await Promise.all(threadPromises)
+  
+    return NextResponse.json({ message }, { status: 200 });
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json(
+      { success: false, message: "Something went wrong" },
+      {
+        status: 500,
+      }
+    );
+  }  
 }
