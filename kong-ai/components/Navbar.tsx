@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import kongAI from "../public/KongAI.webp"
+import kongAI from "../public/KongAI.png"
 
 const routes = [
   {
