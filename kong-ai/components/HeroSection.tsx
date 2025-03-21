@@ -10,23 +10,23 @@ export default function HeroSection() {
 
   useEffect(() => {
     setIsVisible(true)
-    generateLeaves()
+    // generateLeaves()
   }, [])
 
-  const generateLeaves = () => {
-    const leafContainer = document.querySelector(".leaf-container")
-    if (!leafContainer) return
+  // const generateLeaves = () => {
+  //   const leafContainer = document.querySelector(".leaf-container")
+  //   if (!leafContainer) return
 
-    for (let i = 0; i < 20; i++) {
-      const leaf = document.createElement("div")
-      leaf.className = "leaf"
-      leaf.style.left = `${Math.random() * 100}%`
-      leaf.style.animationDelay = `${Math.random() * 10}s`
-      leaf.style.animationDuration = `${10 + Math.random() * 10}s`
-      leaf.style.animation = `fall ${10 + Math.random() * 10}s linear infinite`
-      leafContainer.appendChild(leaf)
-    }
-  }
+  //   for (let i = 0; i < 20; i++) {
+  //     const leaf = document.createElement("div")
+  //     leaf.className = "leaf"
+  //     leaf.style.left = `${Math.random() * 100}%`
+  //     leaf.style.animationDelay = `${Math.random() * 10}s`
+  //     leaf.style.animationDuration = `${10 + Math.random() * 10}s`
+  //     leaf.style.animation = `fall ${10 + Math.random() * 10}s linear infinite`
+  //     leafContainer.appendChild(leaf)
+  //   }
+  // }
 
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
