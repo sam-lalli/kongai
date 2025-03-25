@@ -7,12 +7,16 @@ import { useEffect } from "react";
 import { useAtom } from "jotai";
 import { assistantAtom, userThreadAtom } from "@/atoms";
 import toast, { Toaster } from "react-hot-toast";
+import useServiceWorker from "@/hooks/useServiceWorker";
 
 export default function AppLayout({ children }: Readonly<{children: React.ReactNode; }>) {
 
     // Atom state
     const [, setUserThread] = useAtom(userThreadAtom);
     const [assistant, setAssistant] = useAtom(assistantAtom);
+
+    // Hooks
+    useServiceWorker();
 
     useEffect(() => {
       if (assistant) return;
