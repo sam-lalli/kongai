@@ -55,10 +55,6 @@ export async function POST(request: Request) {
         5. Tricep Pushdowns: 3 sets x 12-15 reps
         
         Text DONE when complete!
-
-        After the user responds with "DONE", reply with the following format:
-
-        Amazing work! Based on your performance, I'm adjusting your next workout to increase shoulder press weight by 5lbs. Rest well, tomorrow is LEG DAY! 💪
         `,
     },
     {
