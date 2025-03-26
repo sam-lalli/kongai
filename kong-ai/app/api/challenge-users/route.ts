@@ -1,11 +1,15 @@
 import { prismadb } from "@/lib/prismadb";
-import { UserThread } from "@prisma/client";
+import { UserMeta, UserThread } from "@prisma/client";
 import axios from "axios";
 import { NextResponse } from "next/server";
 import OpenAI from "openai";
 
 interface UserThreadMap {
   [userId: string]: UserThread;
+}
+
+interface UserMetaMap {
+  [userId: string]: UserMeta;
 }
 
 export async function POST(request: Request) {
@@ -112,14 +116,30 @@ export async function POST(request: Request) {
 
   console.log("userThreads", userThreads);
 
+  //  Grab all user metadata
+  const userMetas = await prismadb.userMeta.findMany({
+    where: {
+      userId: {
+        in: userIds,
+      },
+    },
+  });
+
+  console.log("userMetas", userMetas);
+
   const userThreadMap: UserThreadMap = userThreads.reduce((map, thread) => {
     map[thread.userId] = thread;
     return map;
   }, {} as UserThreadMap);
 
+  const userMetaMap = userMetas.reduce((map, meta) => {
+    map[meta.userId] = meta;
+    return map;
+  }, {} as UserMetaMap);
+
   // Add messages to threads
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const threadPromises: Promise<any>[] = [];
+  const threadAndNotificationsPromises: Promise<any>[] = [];
 
   try{
     challengePreferences.forEach((cp) => {
@@ -128,17 +148,37 @@ export async function POST(request: Request) {
   
       //  ADD MESSAGE
       if (userThread) {
-        threadPromises.push(
+        threadAndNotificationsPromises.push(
           axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/message/create`, {
             message,
             threadId: userThread.threadId,
             fromUser: "false",
           })
         );
+
+        // SEND NOTIFICATION
+        if (cp.sendNotifications) {
+          const correspondingUserMeta = userMetaMap[cp.userId];
+          threadAndNotificationsPromises.push(
+            axios.post(
+              `${process.env.NEXT_PUBLIC_BASE_URL}/api/send-notifications`,
+              {
+                subscription: {
+                  endpoint: correspondingUserMeta.endpoint,
+                  keys: {
+                    auth: correspondingUserMeta.auth,
+                    p256dh: correspondingUserMeta.p256dh,
+                  },
+                },
+                message,
+              }
+            )
+          );
+        }
       }
     });
   
-    await Promise.all(threadPromises)
+    await Promise.all(threadAndNotificationsPromises)
   
     return NextResponse.json({ message }, { status: 200 });
   } catch (error) {
