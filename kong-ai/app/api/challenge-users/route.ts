@@ -46,14 +46,15 @@ export async function POST(request: Request) {
         Here's an example output that you should follow:
         
         Good morning, King! 👑 Today's workout is PUSH DAY. 
-
+        ###
         Ready to dominate the jungle?
+        ###
         1. Bench Press: 4 sets x 8-10 reps
         2. Incline DB Press: 3 sets x 10-12 reps
         3. Shoulder Press: 4 sets x 8-10 reps
         4. Lateral Raises: 3 sets x 12-15 reps
         5. Tricep Pushdowns: 3 sets x 12-15 reps
-        
+        ###
         Text DONE when complete!
         `,
     },
