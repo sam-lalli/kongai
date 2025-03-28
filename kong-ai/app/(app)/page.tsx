@@ -11,7 +11,7 @@ import useServiceWorker from "@/hooks/useServiceWorker";
 import NotificationModal from "@/components/NotificationModal";
 
 
-const POLLING_FREQUENCY_MS = 3000;
+const POLLING_FREQUENCY_MS = 1000;
 
 
 function ChatPage() {
