@@ -10,7 +10,7 @@ import kongAI from "../public/KongAI.png"
 const routes = [
   {
     name: "Chat",
-    path: "/chat",
+    path: "/",
   },
   {
     name: "Profile",
@@ -51,7 +51,7 @@ function Navbar() {
   return (
     <header className="sticky top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="p-4 flex flex-row justify-between items-center bg-black text-white ">
-        <Link href="/" className=" flex flex-rowitems-center gap-x-2">
+        <Link href="/home" className=" flex flex-rowitems-center gap-x-2">
           <Image height="30" src={kongAI} alt="kongAI image"/>
           <h1 className="text-2xl font-bold font-mono">
             <span className={`ml-1 animate-blink ${isVisible ? "border-r-2 border-white" : "border-r-0"}`}>{displayText}</span>

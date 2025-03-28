@@ -11,7 +11,7 @@ import useServiceWorker from "@/hooks/useServiceWorker";
 import NotificationModal from "@/components/NotificationModal";
 
 
-const POLLING_FREQUENCY_MS = 1000;
+const POLLING_FREQUENCY_MS = 3000;
 
 
 function ChatPage() {
@@ -270,7 +270,7 @@ function ChatPage() {
       <div className="flex-grow overflow-y-scroll p-8 space-y-2">
         {/* LOADING STATE */}
         {fetching && messages.length === 0 && (
-          <div className="text-center font-bold">Fetching...</div>
+          <div className="text-center font-bold">Gathering Bananas...</div>
         )}
         {/* NO MESSAGES */}
         {messages.length === 0 && !fetching && (
@@ -311,7 +311,7 @@ function ChatPage() {
             className='ml-4 bg-green-700 text-white px-4 py-2 rounded-full focus:outline-none disabled:bg-gray-400'
             onClick={sendMessage}
             >
-              {sending ? "Sending..." : pollingRun ? "Polling Run..." : "Send"}
+              {sending ? "Sending..." : pollingRun ? "Awaking Kong..." : "Send"}
             </button>
         </div>
       </div>
