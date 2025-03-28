@@ -3,12 +3,13 @@
 import Navbar from "@/components/Navbar";
 import axios from 'axios'
 import { Assistant, UserThread } from "@prisma/client";
-import { useCallback, useEffect, useState } from "react";
+// import { useCallback, useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useAtom } from "jotai";
 import { assistantAtom, userThreadAtom } from "@/atoms";
 import toast, { Toaster } from "react-hot-toast";
 import useServiceWorker from "@/hooks/useServiceWorker";
-import NotificationModal from "@/components/NotificationModal";
+// import NotificationModal from "@/components/NotificationModal";
 
 export default function AppLayout({ children }: Readonly<{children: React.ReactNode; }>) {
 
@@ -17,7 +18,7 @@ export default function AppLayout({ children }: Readonly<{children: React.ReactN
     const [assistant, setAssistant] = useAtom(assistantAtom);
 
     // State
-    const [isNotificationModalVisible, setIsNotificationModalVisible] = useState(false)
+    // const [isNotificationModalVisible, setIsNotificationModalVisible] = useState(false)
 
     // Hooks
     useServiceWorker();
@@ -75,60 +76,60 @@ export default function AppLayout({ children }: Readonly<{children: React.ReactN
         getUserThread();
       }, [setUserThread]);
 
-      useEffect(() => {
-        if ("Notification" in window) {
-          setIsNotificationModalVisible(Notification.permission === "default");
-          console.log("Notification permission:", Notification.permission);
-        }
-      }, []);
+      // useEffect(() => {
+      //   if ("Notification" in window) {
+      //     setIsNotificationModalVisible(Notification.permission === "default");
+      //     console.log("Notification permission:", Notification.permission);
+      //   }
+      // }, []);
 
-      const handleNotificationModalClose = (didConstent: boolean) => {
-        setIsNotificationModalVisible(false);
+      // const handleNotificationModalClose = (didConstent: boolean) => {
+      //   setIsNotificationModalVisible(false);
     
-        if (didConstent) {
-          toast.success("You will now receive notifications.");
-        }
-      };
+      //   if (didConstent) {
+      //     toast.success("You will now receive notifications.");
+      //   }
+      // };
 
-      const saveSubscription = useCallback(async () => {
-        const serviceWorkerRegistration = await navigator.serviceWorker.ready;
-        const subscription = await serviceWorkerRegistration.pushManager.subscribe({
-          userVisibleOnly: true,
-          applicationServerKey: process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY,
-        });
+      // const saveSubscription = useCallback(async () => {
+      //   const serviceWorkerRegistration = await navigator.serviceWorker.ready;
+      //   const subscription = await serviceWorkerRegistration.pushManager.subscribe({
+      //     userVisibleOnly: true,
+      //     applicationServerKey: process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY,
+      //   });
     
-        try {
-          const response = await axios.post("/api/subscription", subscription);
+      //   try {
+      //     const response = await axios.post("/api/subscription", subscription);
     
-          if (!response.data.success) {
-            console.error(response.data.message ?? "Unknown error.");
-            toast.error("Failed to save subscription.");
-            return;
-          }
-        } catch (error) {
-          console.error(error);
-          toast.error("Failed to save subscription.");
-        }
-      }, []);
+      //     if (!response.data.success) {
+      //       console.error(response.data.message ?? "Unknown error.");
+      //       toast.error("Failed to save subscription.");
+      //       return;
+      //     }
+      //   } catch (error) {
+      //     console.error(error);
+      //     toast.error("Failed to save subscription.");
+      //   }
+      // }, []);
     
-      useEffect(() => {
-        if ("Notification" in window && "serviceWorker" in navigator) {
-          if (Notification.permission === "granted") {
-            saveSubscription();
-          }
-        }
-      }, [saveSubscription]);
+      // useEffect(() => {
+      //   if ("Notification" in window && "serviceWorker" in navigator) {
+      //     if (Notification.permission === "granted") {
+      //       saveSubscription();
+      //     }
+      //   }
+      // }, [saveSubscription]);
 
     return (
         <div className="flex flex-col w-full h-full">
           <Navbar/>
           {children}
-          {isNotificationModalVisible && (
+          {/* {isNotificationModalVisible && (
             <NotificationModal
               onRequestClose={handleNotificationModalClose}
               saveSubscription={saveSubscription}
             />
-          )}
+          )} */}
           <Toaster />
         </div>
 
