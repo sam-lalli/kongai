@@ -7,29 +7,32 @@ import { Switch } from './ui/switch'
 import DifficultyCard from './DifficultyCard';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import WorkoutFrequencyCard from './WorkoutFrequencyCard';
 
 const difficulties = [
-    {
-      id: "EASY",
-      level: "Easy",
-      description:
-        "This challenge level is for people who are new to programming. Receive 3 challenges per day (7:30AM, 12PM, & 5:30PM EST).",
-    },
-    {
-      id: "MEDIUM",
-      level: "Medium",
-      description:
-        "This challenge level is for people who are familiar with programming. Receive 4 challenges per day (7AM, 12PM, 5PM, & 8PM EST).",
-    },
-    {
-      id: "HARD",
-      level: "Hard",
-      description:
-        "This challenge level is for people who are experienced with programming. Receive 5 challenges per day (6AM, 9AM, 12PM, 5PM, & 8PM EST).",
-    },
-  ];
+  {
+    id: "EASY",
+    level: "Easy",
+    description:
+      "This challenge level is for people who are new to programming. Receive 3 challenges per day (7:30AM, 12PM, & 5:30PM EST).",
+  },
+  {
+    id: "MEDIUM",
+    level: "Medium",
+    description:
+      "This challenge level is for people who are familiar with programming. Receive 4 challenges per day (7AM, 12PM, 5PM, & 8PM EST).",
+  },
+  {
+    id: "HARD",
+    level: "Hard",
+    description:
+      "This challenge level is for people who are experienced with programming. Receive 5 challenges per day (6AM, 9AM, 12PM, 5PM, & 8PM EST).",
+  },
+];
 
-  type Difficulties = "EASY" | "MEDIUM" | "HARD";
+const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+
+type Difficulties = "EASY" | "MEDIUM" | "HARD";
 
 interface ProfileContainerProps {
     challengePreferences: ChallengePreferences
@@ -40,6 +43,18 @@ function ProfileContainer({ challengePreferences }: ProfileContainerProps) {
     const [sendNotifications, setSendNotifications] = useState(challengePreferences.sendNotifications)
     const [selectedDifficulty, setSelectedDifficulty] = useState(challengePreferences.challengeId)
     const [saving, setSaving] = useState(false)
+    const [selectedDays, setSelectedDays] = useState<string[]>(challengePreferences.daysOfWeek)
+
+
+    const handleToggleDay = (day: string) => {
+      if (selectedDays.includes(day)) {
+        setSelectedDays(selectedDays.filter((d) => d !== day))
+      } else {
+        setSelectedDays([...selectedDays, day])
+      }
+    }
+
+    console.log(selectedDays)
 
     const handleToggleNotifications = () => {
         setSendNotifications((prev) => !prev);
@@ -59,6 +74,7 @@ function ProfileContainer({ challengePreferences }: ProfileContainerProps) {
           }>("/api/challenge-preferences", {
             id: challengePreferences.id,
             challengeId: selectedDifficulty,
+            daysOfWeek: selectedDays,
             sendNotifications,
           });
     
@@ -78,7 +94,8 @@ function ProfileContainer({ challengePreferences }: ProfileContainerProps) {
       };
 
   return (
-    <div className='flex flex-col'>
+    <>
+      <div className='flex flex-col'>
         <div className="flex flex row justify-between items-center mb-4">
         <h1 className="font-bold text-2xl">Challenge Level</h1>
             <Button onClick={handleSave}>{saving ? "Saving..." : "Save"}</Button>
@@ -104,8 +121,14 @@ function ProfileContainer({ challengePreferences }: ProfileContainerProps) {
             }
           />
         ))}
+        </div>
       </div>
-    </div>
+      <WorkoutFrequencyCard
+        daysOfWeek={daysOfWeek}
+        selectedDays={selectedDays}
+        toggleDay={handleToggleDay}
+      />
+    </>
   )
 }
 

@@ -11,9 +11,9 @@ export async function POST(request: Request) {
 
   const response = await request.json();
 
-  const { id, sendNotifications, challengeId } = response;
+  const { id, sendNotifications, challengeId, daysOfWeek } = response;
 
-  if (!id || sendNotifications === undefined || !challengeId) {
+  if (!id || sendNotifications === undefined || !challengeId || !daysOfWeek) {
     return NextResponse.json(
       { message: "Missing required fields" },
       { status: 400 }
@@ -30,6 +30,7 @@ export async function POST(request: Request) {
         data: {
           challengeId,
           sendNotifications,
+          daysOfWeek,
         },
       });
 
