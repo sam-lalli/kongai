@@ -21,6 +21,7 @@ export default async function ProfilePage() {
       data: {
         userId: user.id,
         challengeId: "EASY",
+        daysOfWeek: ["Monday"],
       },
     });
   }
