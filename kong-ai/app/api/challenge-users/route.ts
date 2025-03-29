@@ -134,6 +134,8 @@ export async function POST(request: Request) {
     return map;
   }, {} as UserMetaMap);
 
+  const today = new Date().toLocaleString("en-US", { weekday: "long" });
+
   // Add messages to threads
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const threadAndNotificationsPromises: Promise<any>[] = [];
@@ -142,6 +144,17 @@ export async function POST(request: Request) {
     challengePreferences.forEach((cp) => {
       //  FIND USER
       const userThread = userThreadMap[cp.userId];
+
+      // Check if today's day is in their daysOfWeek
+      const isTodaySelected =
+      !cp.daysOfWeek || cp.daysOfWeek.length === 0 // If empty, treat as "send every day"
+        ? true
+        : cp.daysOfWeek.includes(today);
+    
+      if (!isTodaySelected) {
+        console.log(`Skipping ${cp.userId} because ${today} is not in their daysOfWeek`);
+        return; // Skip this user
+      }
   
       //  ADD MESSAGE
       if (userThread) {
